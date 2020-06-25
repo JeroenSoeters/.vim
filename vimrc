@@ -173,11 +173,11 @@ if has('gui_running')
   syntax enable
 endif
 set background=dark
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
+" let g:solarized_termcolors=256
+" let g:solarized_termtrans=1
 " let g:hybrid_use_Xresources = 1
 " let g:rehash256 = 1
-colorscheme solarized
+colorscheme gruvbox
 set guifont=Inconsolata:h15
 set guioptions-=L
 
@@ -507,12 +507,11 @@ let g:vim_json_syntax_conceal = 0
 " use deoplete for Neovim.
 if has('nvim')
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
   let g:deoplete#sources#go#sort_class = ['func', 'type', 'var', 'const']
   let g:deoplete#sources#go#align_class = 1
 
 
+  call deoplete#custom#option('ignore_sources', {'_': ['buffer', 'member', 'tag', 'file', 'neosnippet']})
   " Use partial fuzzy matches like YouCompleteMe
   call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
   call deoplete#custom#source('_', 'converters', ['converter_remove_paren'])
@@ -569,7 +568,7 @@ let g:vim_markdown_json_frontmatter = 1
 
 " =================== vim-airline ========================
 
-let g:airline_theme='solarized'
+let g:airline_theme='gruvbox'
 
 " set to use powerline fonts when not in a ssh session
 let g:remoteSession = ($STY == "")
@@ -594,5 +593,24 @@ let g:rust_clip_command = 'xclip -selection clipboard'
 
 " Run terraform fmt on save.
 let g:terraform_fmt_on_save=1
+
+" =================== LanguageClient-neovim ========================
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+
+" =================== ncm2 ========================
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
 
 " vim:ts=2:sw=2:et
