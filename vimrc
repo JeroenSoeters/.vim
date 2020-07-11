@@ -613,4 +613,10 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
 
+
+" =================== fzf ========================
+set rtp+=/usr/local/opt/fzf
+nnoremap <c-f> :Files<CR>
+nnoremap <C-g> :Rg<Cr>
+
 " vim:ts=2:sw=2:et
