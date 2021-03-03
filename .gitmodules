@@ -115,9 +115,6 @@
 [submodule "bundle/vim-highlightedyank"]
 	path = bundle/vim-highlightedyank
 	url = https://github.com/machakann/vim-highlightedyank.git
-[submodule "bundle/LanguageClient-neovim"]
-	path = bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim.git
 [submodule "bundle/ncm2"]
 	path = bundle/ncm2
 	url = https://github.com/ncm2/ncm2.git
@@ -130,3 +127,6 @@
 [submodule "bundle/vim-hug-neovim-rpc"]
 	path = bundle/vim-hug-neovim-rpc
 	url = https://github.com/roxma/vim-hug-neovim-rpc
+[submodule "bundle/LanguageClient-neovim"]
+	path = bundle/LanguageClient-neovim
+	url = https://github.com/autozimu/LanguageClient-neovim.git

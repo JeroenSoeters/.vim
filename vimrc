@@ -297,6 +297,12 @@ cmap w!! w !sudo tee > /dev/null %
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
 
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
+
+" Quick-save
+nmap <leader>w :w<CR>
+
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 function! XTermPasteBegin()
@@ -586,6 +592,10 @@ let g:rustfmt_autosave = 1
 " clipboard.
 let g:rust_clip_command = 'xclip -selection clipboard'
 
+au FileType rust nmap <leader>t :RustTest<CR>
+au FileType rust nmap <leader>a :RustTest!<CR>
+
+
 " =================== vim-terraform ========================
 
 " Allow vim-terraform to override your .vimrc indentation syntax for matching files.
@@ -599,12 +609,20 @@ let g:terraform_fmt_on_save=1
 set hidden
 
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'rust': ['rust-analyzer'],
+    \ 'python': ['/home/vagrant/.local/bin/pyls'],
     \ }
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+
+" Maps K to hover, gd to goto definition, F2 to rename
+nnoremap <silent> K :call LanguageClient_textDocument_hover()
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()
 
 " =================== ncm2 ========================
 " enable ncm2 for all buffers
@@ -615,8 +633,11 @@ set completeopt=noinsert,menuone,noselect
 
 
 " =================== fzf ========================
-set rtp+=/usr/local/opt/fzf
+set rtp+=/home/vagrant/.fzf/bin/fzf
 nnoremap <c-f> :Files<CR>
 nnoremap <C-g> :Rg<Cr>
 
 " vim:ts=2:sw=2:et
+"
+" Format json
+nmap =j :%!python -m json.tool<CR>
