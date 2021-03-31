@@ -592,6 +592,7 @@ let g:rustfmt_autosave = 1
 " clipboard.
 let g:rust_clip_command = 'xclip -selection clipboard'
 
+au FileType rust nmap <leader>r :RustRun<CR>
 au FileType rust nmap <leader>t :RustTest<CR>
 au FileType rust nmap <leader>a :RustTest!<CR>
 
@@ -602,13 +603,14 @@ au FileType rust nmap <leader>a :RustTest!<CR>
 "let g:terraform_align=1
 
 " Run terraform fmt on save.
-let g:terraform_fmt_on_save=1
+let g:terraform_fmt_on_save=0
 
 " =================== LanguageClient-neovim ========================
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
 let g:LanguageClient_serverCommands = {
+    \ 'go': ['gopls'],
     \ 'rust': ['rust-analyzer'],
     \ 'python': ['/home/vagrant/.local/bin/pyls'],
     \ }
@@ -618,11 +620,20 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
-
 " Maps K to hover, gd to goto definition, F2 to rename
-nnoremap <silent> K :call LanguageClient_textDocument_hover()
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()
+
+" Use language server in Ale
+let g:ale_linters = {
+  \ 'go': ['gopls'],
+  \ 'rust': ['analyzer'],
+  \ }
+
+
+" =================== vim-ale ========================
+nnoremap <leader>gd :ALEGoToDefinition<CR>
 
 " =================== ncm2 ========================
 " enable ncm2 for all buffers
