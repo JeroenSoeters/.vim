@@ -160,10 +160,10 @@ if has('gui_running')
 endif
 
 if has('nvim')
-  let g:tokyonight_style = "night"
-  let g:tokyonight_italic_functions = 1
-  let g:tokyonight_transparent = 1
-  colorscheme tokyonight
+" let g:tokyonight_style = "night"
+" let g:tokyonight_italic_functions = 1
+" let g:tokyonight_transparent = 1
+  colorscheme gruvbox-material
 else
   set background=dark
   let g:solarized_termcolors=256
@@ -872,7 +872,7 @@ if has('nvim')
 lua << EOF
 require('lualine').setup{
   options = {
-    theme = 'tokyonight'
+    theme = 'gruvbox-material'
     }
   }
 EOF
@@ -931,46 +931,6 @@ require'lspconfig'.gopls.setup{}
 EOF
 else
   echo "You might want to install gopls: https://github.com/golang/tools/tree/master/gopls"
-endif
-
-" =================== kcl-lsp ========================
-if executable('kcl-language-server')
-lua << EOF
-local lspconfig = require 'lspconfig'
-local configs = require 'lspconfig.configs'
-
-if not configs.kcl_lsp then
-  configs.kcl_lsp = {
-    default_config = {
-      cmd = {'kcl-language-server', 'server', '--stdio'},
-      filetypes = {'kcl'},
-      root_dir = lspconfig.util.root_pattern('.git'),
-      single_file_support = true,
-    },
-    docs = {
-      description = [=[
-https://github.com/KittyCAD/kcl-lsp
-https://kittycad.io
-
-The KittyCAD Language Server Protocol implementation for the KCL language.
-
-To better detect kcl files, the following can be added:
-
-```
-vim.cmd [[ autocmd BufRead,BufNewFile *.kcl set filetype=kcl ]]
-```
-]=],
-      default_config = {
-        root_dir = [[root_pattern(".git")]],
-      },
-    }
-  }
-end
-
-lspconfig.kcl_lsp.setup{}
-EOF
-else
-  echo "You might want to install kcl-language-server: https://github.com/KittyCAD/kcl-lsp/releases"
 endif
 
 " =================== rust-analyzer ========================
@@ -1067,7 +1027,7 @@ require("cmp_git").setup({
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd', 'kcl_lsp', 'ocamllsp', 'rust_analyzer', 'tsserver' }
+local servers = { 'clangd', 'ocamllsp', 'rust_analyzer', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     -- on_attach = my_custom_on_attach,
@@ -1243,6 +1203,9 @@ require"octo".setup({
     size = 10,                             -- changed files panel rows
     use_icons = true                       -- use web-devicons in file panel
   },
+  suppress_missing_scope = {
+    projects_v2 = true,
+  },
   mappings = {
     issue = {
       close_issue = "<space>ic",           -- close issue
@@ -1355,43 +1318,6 @@ require"octo".setup({
   }
 })
 EOF
-endif
-
-" =================== ocaml ========================
-
-if executable('dot-merlin-reader')
-    let s:opam_share_dir = system("opam var share")
-    let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
-
-    let s:opam_configuration = {}
-
-    function! OpamConfOcpIndent()
-        execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-    endfunction
-    let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-    function! OpamConfOcpIndex()
-        execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-    endfunction
-    let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-    function! OpamConfMerlin()
-        let l:dir = s:opam_share_dir . "/merlin/vim"
-        execute "set rtp+=" . l:dir
-    endfunction
-    let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-    let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-    let s:opam_available_tools = []
-    for tool in s:opam_packages
-      " Respect package order (merlin should be after ocp-index)
-      if isdirectory(s:opam_share_dir . "/" . tool)
-        call add(s:opam_available_tools, tool)
-        call s:opam_configuration[tool]()
-      endif
-    endfor
-else
-  echo "You might want to install merlin: opam install merlin"
 endif
 
 " vim:ts=2:sw=2:et
