@@ -163,7 +163,12 @@ if has('nvim')
 " let g:tokyonight_style = "night"
 " let g:tokyonight_italic_functions = 1
 " let g:tokyonight_transparent = 1
-  colorscheme gruvbox-material
+lua << EOF
+require('rose-pine').setup({
+  dark_variant = 'moon',
+})
+EOF
+  colorscheme rose-pine
 else
   set background=dark
   let g:solarized_termcolors=256
@@ -282,9 +287,6 @@ imap jk <ESC>l
 
 " spell check
 nnoremap <F6> :setlocal spell! spell?<CR>
-
-" disable the recording macro, drives me nuts.
-map q <Nop>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -563,7 +565,7 @@ EOF
 endif
 
 " ==================== nvim-tree.lua ====================
-noremap <C-a> :NvimTreeToggle<CR>
+" noremap <C-a> :NvimTreeToggle<CR>
 
 let g:which_key_map.n = { 'name' : '+file tree' }
 noremap <leader>nn :NvimTreeToggle<cr>
@@ -872,7 +874,7 @@ if has('nvim')
 lua << EOF
 require('lualine').setup{
   options = {
-    theme = 'gruvbox-material'
+    theme = 'rose-pine'
     }
   }
 EOF
@@ -1317,6 +1319,33 @@ require"octo".setup({
     }
   }
 })
+EOF
+endif
+
+if has('nvim')
+lua << EOF
+-- deps
+require('cmp').setup ({
+  -- use recommended settings from abov
+})
+
+require('img-clip').setup ({
+  -- use recommended settings from above
+})
+
+--require('copilot').setup ({
+  -- use recommended settings from above
+--})
+
+require('render-markdown').setup ({
+  -- use recommended settings from above
+})
+
+require('avante_lib').load()
+
+require('avante').setup ({
+})
+
 EOF
 endif
 

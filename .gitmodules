@@ -154,3 +154,18 @@
 [submodule "bundle/rose-pine"]
 	path = bundle/rose-pine
 	url = https://github.com/rose-pine/neovim.git
+[submodule "bundle/avante.nvim"]
+	path = bundle/avante.nvim
+	url = https://github.com/yetone/avante.nvim.git
+[submodule "bundle/img-clip.nvim"]
+	path = bundle/img-clip.nvim
+	url = https://github.com/HakonHarnes/img-clip.nvim.git
+[submodule "bundle/copilot.vim"]
+	path = bundle/copilot.vim
+	url = https://github.com/github/copilot.vim.git
+[submodule "bundle/render-markdown.nvim"]
+	path = bundle/render-markdown.nvim
+	url = https://github.com/MeanderingProgrammer/render-markdown.nvim.git
+[submodule "bundle/nui.nvim"]
+	path = bundle/nui.nvim
+	url = https://github.com/MunifTanjim/nui.nvim.git
